@@ -15,7 +15,7 @@ public class rsaEC{
         System.out.println("private key_2 = " + r.d);
         System.out.println("n = " + r.n);
 
-        BigInteger[] xy;// = new BigInteger[2];
+        BigInteger[] xy;
         String message = sc.nextLine();
         byte[] mas = message.getBytes();
 
@@ -28,11 +28,11 @@ public class rsaEC{
         System.out.println("Открытый текст");
         System.out.println(x);
         System.out.println(y);
-        System.out.println("закрытый текст");
+        System.out.println("Закрытый текст");
         xy = r.encript(x, y);
         System.out.println(xy[0]);
         System.out.println(xy[1]);
-        System.out.println("расшифрованный текст");
+        System.out.println("Расшифрованный текст");
         xy = r.decript(xy);
         System.out.println(bigintegertostring(xy[0]) + bigintegertostring(xy[1]) );
     }
@@ -56,7 +56,7 @@ public class rsaEC{
     BigInteger e, d;
     BigInteger n;
     int length;
-    //BigInteger mod, rem;
+  
     RSA_e_c(int length){
         this.length = length / 2;
     }
@@ -64,7 +64,6 @@ public class rsaEC{
     public void generate_parameters(){
         p = get_prime();
         q = get_prime();
-        //distinct(p, q);
         e = generate_public_key(p,q);
         d = generate_private_key(p, q, e);
         n = p.multiply(q);
@@ -136,7 +135,7 @@ public class rsaEC{
         return prime;
     }
 
-    public  boolean prime_mod(BigInteger prime){ // TODO
+    public  boolean prime_mod(BigInteger prime){ 
         BigInteger mod = new BigInteger("3");
         BigInteger two = new BigInteger("2");
 
@@ -161,7 +160,6 @@ public class rsaEC{
 
         xy = mult_e(xy, e);
 
-        //  xy = curve(xy, b, n);
         return xy;
     }
 
@@ -172,27 +170,7 @@ public class rsaEC{
         return xy;
     }
 
-    public BigInteger[] curve(BigInteger[] xy, BigInteger b, BigInteger n){
-        BigInteger x = xy[0];
-        BigInteger y = xy[1];
 
-        y = y.pow(2);
-
-        x = x.pow(3).add(b);
-
-        x = x.mod(n);
-
-        y = y.mod(n);
-
-        xy[0] = x;
-        xy[1] = y;
-
-        if(x.equals(y)){
-            System.out.println("nice");
-            return xy;
-        }
-        return xy;
-    }
 
     public BigInteger[] decript(BigInteger[] xy){
 
